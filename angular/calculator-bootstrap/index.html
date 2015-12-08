@@ -5,43 +5,12 @@
 	<body>
 
 		<div ng-app="myApp" ng-controller="calcCtrl">
-		 	
-		 	<div class="container">
-		 		<div class="row">
-				 	<div id="input" class="col-sm-6">
-						<div class="page-header">
-							<h1>Input</h1>
-						</div>
-
-						<p>Name : <input type="text" ng-model="name" placeholder="Enter a name here"></p>
-						<p>Field 1 : <input type="number" ng-model="calc.field1" placeholder="First number" /> </p>
-						<p>Field 2 : <input type="number" ng-model="calc.field2" placeholder="Second number" /> </p>
-
-						<div>
-							<SPAN>Calc method : </SPAN>
-							<SELECT name="calcMethod" ng-model="calc.selectedMethod">
-								<OPTION value="sum">Sum</OPTION>
-								<OPTION value="multiply">Multiply</OPTION>
-							</SELECT> 
-						</div>
-					</div>
-
-					<div id="output" class="col-sm-6">
-						<div class="page-header">
-							<h1>Output</h1>
-						</div>
-
-						Hello {{name}}
-						<p>Total : {{calc.calculate()}}</p>
-					</div>
-				</div>
-			</div>
 
 			<div class="container">
 				<div class="page-header">
 					<h1>Calculator</h1>
 				</div>
-				
+
 				<div id="workings">
 					<p>Display : {{calc.display()}}</p>
 					<p>Working field : <input type="number" ng-model="calc.fieldWorking" placeholder="Input number" /></p>
@@ -92,9 +61,39 @@
 					</div>
 				</div>
 
-
-
 			</div>
+		 	
+		 	<div class="container">
+		 		<div class="row">
+				 	<div id="input" class="col-sm-6">
+						<div class="page-header">
+							<h1>Input</h1>
+						</div>
+
+						<p>Name : <input type="text" ng-model="name" placeholder="Enter a name here"></p>
+						<p>Field 1 : <input type="number" ng-model="calc.field1" placeholder="First number" /> </p>
+						<p>Field 2 : <input type="number" ng-model="calc.field2" placeholder="Second number" /> </p>
+
+						<div>
+							<SPAN>Calc method : </SPAN>
+							<SELECT name="calcMethod" ng-model="calc.selectedMethod">
+								<OPTION value="sum">Sum</OPTION>
+								<OPTION value="multiply">Multiply</OPTION>
+							</SELECT> 
+						</div>
+					</div>
+
+					<div id="output" class="col-sm-6">
+						<div class="page-header">
+							<h1>Output</h1>
+						</div>
+
+						Hello {{name}}
+						<p>Total : {{calc.calculate()}}</p>
+					</div>
+				</div>
+			</div>
+
 		</div>
 
 	</body>
