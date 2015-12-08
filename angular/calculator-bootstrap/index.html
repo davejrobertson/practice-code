@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+	<script src="lib/angular.js"></script>
+	<link rel="stylesheet" href="lib/bootstrap/3.2.0/css/bootstrap.min.css">
+	<body>
+
+		<div ng-app="myApp" ng-controller="calcCtrl">
+		 
+		 	<div id="input">
+				<h1>Input</h1>
+
+				<p>Name : <input type="text" ng-model="name" placeholder="Enter a name here"></p>
+				<p>Field 1 : <input type="number" ng-model="calc.field1" placeholder="First number" /> </p>
+				<p>Field 2 : <input type="number" ng-model="calc.field2" placeholder="Second number" /> </p>
+
+				<div>
+					<SPAN>Calc method : </SPAN>
+					<SELECT name="calcMethod" ng-model="calc.selectedMethod">
+						<OPTION value="sum">Sum</OPTION>
+						<OPTION value="multiply">Multiply</OPTION>
+					</SELECT> 
+				</div>
+			</div>
+
+			<div id="output">
+				<h1>Output</h1>
+				Hello {{name}}
+				<p>Total : {{calc.calculate()}}</p>
+			</div>
+
+			<div>
+				<h1>Calculator</h1>
+
+				<div id="workings">
+					<p>Display : {{calc.display()}}</p>
+					<p>Working field : <input type="number" ng-model="calc.fieldWorking" placeholder="Input number" /></p>
+					<p>Variable 2 field : <input type="number" ng-model="calc.fieldVariable2" placeholder="Variable 2" /></p>
+					<p>Input field : <input type="number" ng-model="calc.fieldInput" placeholder="Input number" /></p>
+				</div>
+
+				<div id="calculatorDiv">
+					<TABLE>
+						<TR>
+							<TD colspan="4"><input align="right" value="{{calc.display()}}" type="text" /></TD>
+						</TR>
+						<TR>
+							<TD><button ng-click="calc.pressClear()">AC</button></TD>
+							<TD><button disabled="disabled" ></button></TD>
+							<TD><button disabled="disabled" ></button></TD>
+							<TD><button disabled="disabled" ng-click="calc.pressOperator('divide')">%</button></TD>
+						</TR>
+						<TR>
+							<TD><button ng-click="calc.inputNo(7)">7</button></TD>
+							<TD><button ng-click="calc.inputNo(8)">8</button></TD>
+							<TD><button ng-click="calc.inputNo(9)">9</button></TD>
+							<TD><button disabled="disabled" ng-click="calc.pressOperator('multiply')">x</button></TD>
+						</TR>
+						<TR>
+							<TD><button ng-click="calc.inputNo(4)">4</button></TD>
+							<TD><button ng-click="calc.inputNo(5)">5</button></TD>
+							<TD><button ng-click="calc.inputNo(6)">6</button></TD>
+							<TD><button disabled="disabled" ng-click="calc.pressOperator('subtract')">-</button></TD>
+						</TR>
+						<TR>
+							<TD><button ng-click="calc.inputNo(1)">1</button></TD>
+							<TD><button ng-click="calc.inputNo(2)">2</button></TD>
+							<TD><button ng-click="calc.inputNo(3)">3</button></TD>
+							<TD><button ng-click="calc.pressOperator('sum')">+</button></TD>
+						</TR>
+						<TR>
+							<TD colspan="3" ><button ng-click="calc.inputNo(0)">0</button></TD>
+							<TD><button ng-click="calc.pressEquals()">=</button></TD>
+						</TR>
+
+					</TABLE>
+				</div>
+
+			</div>
+		</div>
+
+	</body>
+	<script>
+		var app = angular.module('myApp', []);
+		app.controller('calcCtrl', function($scope) {
+			$scope.calc = {
+					field1: null, 
+					field2: null,
+					fieldInput: 0,
+					fieldWorking: null,
+					displayWorking: false,
+					selectedMethod: "sum",
+					calculate: function() {
+							if (this.selectedMethod === "sum") {
+								return this.field1 + this.field2;
+							}
+							else if (this.selectedMethod === "multiply") {
+								return this.field1 * this.field2;
+							};
+						},
+					display: function() {
+							if (this.displayWorking === true) {
+								return this.fieldWorking;
+							}
+							else {
+								return this.fieldInput;
+							}
+						},
+					calculateWorking: function() {
+							if (this.selectedMethod === "sum") {
+								return this.fieldWorking + this.fieldVariable2;
+							}
+							else if (this.selectedMethod === "multiply") {
+								return this.fieldWorking * this.fieldVariable2;
+							};
+						},
+					pressOperator: function(newCalcmethod) {
+
+							//if input field is being displayed, then copy input to formula variable
+							if (this.displayWorking === false) {
+								this.fieldVariable2 = this.fieldInput;
+
+								//calculate and then display result
+								this.fieldWorking = this.calculateWorking();
+								this.displayWorking = true;
+							}
+
+							//then prep for further input
+							this.selectedMethod = newCalcmethod;
+							this.fieldInput = 0;
+							
+						},
+					pressClear: function() {
+							this.fieldVariable2 = 0;
+							this.fieldInput = 0;
+							this.fieldWorking = null;
+							this.selectedMethod = "sum";
+							this.displayWorking = false;
+						},
+					pressEquals: function() {
+
+							//if working field is being displayed, then copy input to formula variable
+							if (this.displayWorking === false) {
+								this.fieldVariable2 = this.fieldInput;
+							}
+
+							//calculate and then display result
+							this.fieldWorking = this.calculateWorking();
+							this.displayWorking = true;
+
+							//then prep for further input without changing the calculation method
+							this.fieldInput = 0;
+
+						},
+					inputNo: function(number) {
+							//show the number being entered
+							this.displayWorking = false;
+
+							//change the input to a string so it can be concatenated onto the end
+							var inputField = this.fieldInput;
+							var inputString = inputField.toString();
+
+							inputString = inputString + number;
+
+							//put the resultant concatenated string back into the input field
+							this.fieldInput = Number(inputString);
+
+
+						}
+				};
+
+		    $scope.name = "David";
+
+		});
+	</script>
+	<style>
+		#calculatorDiv td {
+			width:30px;
+		}
+		#calculatorDiv button {
+			width:100%;
+		}
+
+		#calculatorDiv input { 
+			text-align: right; 
+		}
+
+		#workings {
+			display: none;
+		}
+	</style>
+</html>
