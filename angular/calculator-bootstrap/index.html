@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<script src="lib/angular.js"></script>
+	<link rel="stylesheet" href="lib/bootstrap/3.2.0/css/bootstrap.min.css">
+	<body>
+
+		<div ng-app="myApp" ng-controller="calcCtrl">
+
+			<div class="container">
+				<div class="page-header">
+					<h1>Calculator</h1>
+				</div>
+
+				<div id="workings">
+					<p>Display : {{calc.display()}}</p>
+					<p>Working field : <input type="number" ng-model="calc.fieldWorking" placeholder="Input number" /></p>
+					<p>Variable 2 field : <input type="number" ng-model="calc.fieldVariable2" placeholder="Variable 2" /></p>
+					<p>Input field : <input type="number" ng-model="calc.fieldInput" placeholder="Input number" /></p>
+				</div>
+
+				<div id="calculatorDiv" class="container">
+					<div class="row">
+							<input class="form-control" id="calcDisplay" disabled="disabled" value="{{calc.display()}}" type="text" />
+					</div>
+					<div class="row">
+						<div class="btn-group">
+							<button type="button" class="btn btn-primary" ng-click="calc.pressClear()">AC</button>
+							<button type="button" class="btn btn-primary btn-disabled-spacer" disabled="disabled" ></button>
+							<button type="button" class="btn btn-primary" ng-click="calc.pressOperator('divide')">%</button>
+						</div>
+					</div>
+					<div class="row">
+						<div class="btn-group">
+							<button type="button" class="btn btn-primary" ng-click="calc.inputNo(7)">7</button>
+							<button type="button" class="btn btn-primary" ng-click="calc.inputNo(8)">8</button>
+							<button type="button" class="btn btn-primary" ng-click="calc.inputNo(9)">9</button>
+							<button type="button" class="btn btn-primary" ng-click="calc.pressOperator('multiply')">x</button>
+						</div>
+					</div>
+					<div class="row">
+						<div class="btn-group">
+							<button type="button" class="btn btn-primary" ng-click="calc.inputNo(4)">4</button>
+							<button type="button" class="btn btn-primary" ng-click="calc.inputNo(5)">5</button>
+							<button type="button" class="btn btn-primary" ng-click="calc.inputNo(6)">6</button>
+							<button type="button" class="btn btn-primary" ng-click="calc.pressOperator('subtract')">-</button>
+						</div>
+					</div>
+					<div class="row">
+						<div class="btn-group">
+							<button type="button" class="btn btn-primary" ng-click="calc.inputNo(1)">1</button>
+							<button type="button" class="btn btn-primary" ng-click="calc.inputNo(2)">2</button>
+							<button type="button" class="btn btn-primary" ng-click="calc.inputNo(3)">3</button>
+							<button type="button" class="btn btn-primary" ng-click="calc.pressOperator('sum')">+</button>
+						</div>
+					</div>
+					<div class="row">
+						<div class="btn-group">
+							<button type="button" id="btn-zero" class="btn btn-primary btn-zero" ng-click="calc.inputNo(0)">0</button>
+							<button type="button" class="btn-success" ng-click="calc.pressEquals()">=</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		 	<div class="container">
+		 		<div class="row">
+				 	<div id="input" class="col-sm-6">
+						<div class="page-header">
+							<h1>Input</h1>
+						</div>
+
+						<p>Name : <input type="text" ng-model="name" placeholder="Enter a name here"></p>
+						<p>Field 1 : <input type="number" ng-model="calc.field1" placeholder="First number" /> </p>
+						<p>Field 2 : <input type="number" ng-model="calc.field2" placeholder="Second number" /> </p>
+
+						<div>
+							<SPAN>Calc method : </SPAN>
+							<SELECT name="calcMethod" ng-model="calc.selectedMethod">
+								<OPTION value="sum">Sum</OPTION>
+								<OPTION value="multiply">Multiply</OPTION>
+							</SELECT> 
+						</div>
+					</div>
+
+					<div id="output" class="col-sm-6">
+						<div class="page-header">
+							<h1>Output</h1>
+						</div>
+
+						Hello {{name}}
+						<p>Total : {{calc.calculate()}}</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</body>
+	<script src="js/appCalculator.js"></script>
+	<link rel="stylesheet" href="css/appCalculator.css" />
+</html>
