@@ -28,9 +28,15 @@ app.controller('calcCtrl', function($scope) {
 					if (this.selectedMethod === "sum") {
 						return this.fieldWorking + this.fieldVariable2;
 					}
+					else if (this.selectedMethod === "subtract") {
+						return this.fieldWorking - this.fieldVariable2;
+					}
 					else if (this.selectedMethod === "multiply") {
 						return this.fieldWorking * this.fieldVariable2;
-					};
+					}
+					else if (this.selectedMethod === "divide") {
+						return this.fieldWorking / this.fieldVariable2;
+					}
 				},
 			pressOperator: function(newCalcmethod) {
 
