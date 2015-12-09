@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<script src="lib/angular.js"></script>
+	<link rel="stylesheet" href="lib/bootstrap/3.2.0/css/bootstrap.min.css">
+	<body>
+
+		<div ng-app="mapping" ng-controller="mapCtrl">
+
+
+			<div class="jumbotron">
+				<h1>Customer Mapping</h1>
+				<p>A demonstration of a Google Maps integration using JavaScript, Angular, AJAX and a JSON data source.</p>
+			</div>
+
+		 	<div class="container">
+		 		<div class="row">
+				 	<div id="input" class="col-sm-7">
+						<table class="table">
+							<tr>
+								<th>Customer Name</th>
+								<th>Location</th>
+								<th>Journey distance</th>
+								<th>Journey time</th>
+							</tr>
+
+							<tr ng-repeat="customer in customers">
+								<td>{{customer.Name}}</td>
+								<td>{{customer.City}}, {{customer.Country}}</td>
+								<td></td>
+								<td></td>
+							</tr>
+						</table>
+					</div>
+
+					<div id="output" class="col-sm-5">
+						<div id="map">
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</body>
+
+	<script src="js/appMapping.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?&callback=initMap"></script>
+
+
+	<link rel="stylesheet" href="css/appMapping.css" />
+</html>
