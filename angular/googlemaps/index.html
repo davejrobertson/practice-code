@@ -14,9 +14,11 @@
 
 		 	<div class="container">
 		 		<div class="row">
+
 				 	<div id="input" class="col-sm-7">
 						<table class="table">
 							<tr>
+								<th></th>
 								<th>Customer Name</th>
 								<th>Location</th>
 								<th>Journey distance</th>
@@ -24,6 +26,7 @@
 							</tr>
 
 							<tr ng-repeat="customer in customers">
+								<td>{{gmaps.addMarker(customer, $index)}}</td>
 								<td>{{customer.Name}}</td>
 								<td>{{customer.City}}, {{customer.Country}}</td>
 								<td></td>
@@ -36,6 +39,7 @@
 						<div id="map">
 						</div>
 					</div>
+					
 				</div>
 			</div>
 
@@ -44,7 +48,7 @@
 	</body>
 
 	<script src="js/appMapping.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?&callback=initMap"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuid2pFOtiwQSEzazrQj9CZUiNxb7rvkY&callback=initMap"></script>
 
 
 	<link rel="stylesheet" href="css/appMapping.css" />
