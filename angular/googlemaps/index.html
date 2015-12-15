@@ -10,6 +10,16 @@
 			<div class="jumbotron">
 				<h1>Customer Mapping</h1>
 				<p>A demonstration of a Google Maps integration using JavaScript, Angular, AJAX and a JSON data source.</p>
+				<form class="form-group">
+					<div class="row">
+						<span >Enter a start address for journey distance/time to be displayed</span>
+					</div>
+					<div class="row">
+						<input type="text"  class="col-sm-3" ng-model="gmaps.startAddressDraft" placeholder="e.g. London, UK"/>
+						<button  class="col-sm-1 btn-success" ng-click="gmaps.clickBtnStartAddress()" >Go</button>
+						<input type="hidden" ng-model="gmaps.startAddress" />
+					</div>
+				</form>
 			</div>
 
 		 	<div class="container">
@@ -26,11 +36,11 @@
 							</tr>
 
 							<tr ng-repeat="customer in customers">
-								<td>{{gmaps.addMarker(customer, $index)}}</td>
+								<td>{{customer.markerIndex}}</td>
 								<td>{{customer.Name}}</td>
 								<td>{{customer.City}}, {{customer.Country}}</td>
-								<td></td>
-								<td></td>
+								<td>{{customer.journeyDistance | gMapsDistance}}</td>
+								<td>{{customer.journeyTime | gMapsTime}}</td>
 							</tr>
 						</table>
 					</div>
@@ -39,7 +49,7 @@
 						<div id="map">
 						</div>
 					</div>
-					
+
 				</div>
 			</div>
 
