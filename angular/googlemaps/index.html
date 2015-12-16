@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
-	<script src="lib/angular.js"></script>
-	<link rel="stylesheet" href="lib/bootstrap/3.2.0/css/bootstrap.min.css">
+	<script src="lib/angular/1.4.8/js/angular.min.js"></script>
+	<script src="js/appMapping.js"></script>
+
 	<body>
 
 		<div ng-app="mapping" ng-controller="mapCtrl">
-
 
 			<div class="jumbotron well-sm">
 				<h1>Customer Mapping</h1>
@@ -64,9 +64,10 @@
 
 	</body>
 
-	<script src="js/appMapping.js"></script>
+	<link rel="stylesheet" href="lib/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/appMapping.css" />
+
     <script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap"></script>
 
 
-	<link rel="stylesheet" href="css/appMapping.css" />
 </html>
