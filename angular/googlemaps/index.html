@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<script src="lib/angular.js"></script>
+	<link rel="stylesheet" href="lib/bootstrap/3.2.0/css/bootstrap.min.css">
+	<body>
+
+		<div ng-app="mapping" ng-controller="mapCtrl">
+
+
+			<div class="jumbotron well-sm">
+				<h1>Customer Mapping</h1>
+				<p>A demonstration of a Google Maps integration using JavaScript, Angular, AJAX and a JSON data source.</p>
+				<form class="form-inline" role="form">
+				  <div class="form-group">
+				    <label for="startAddress">Start address:</label>
+				    <input type="text" id="startAddress" ng-model="gmaps.startAddressDraft" class="form-control" placeholder="e.g. London, UK"/>
+					
+					<input type="hidden" ng-model="gmaps.startAddress" />
+				  </div>
+				  <button type="submit" class="btn btn-success" ng-click="gmaps.clickBtnStartAddress()" >Go</button>
+				  
+				</form>
+			</div>
+
+		 	<div class="container-fluid">
+		 		<div class="row">
+				 	<div ng-if="customers === undefined" id="input" class="col-sm-7">
+						<p>. . loading customers. . </p>
+					</div>
+
+				 	<div ng-if="customers !== undefined" id="input" class="col-sm-7">
+						<table class="table">
+							<tr>
+								<th></th>
+								<th>Customer Name</th>
+								<th>Location</th>
+								<th>Journey distance</th>
+								<th>Journey time</th>
+							</tr>
+
+							<tr ng-repeat="customer in customers">
+								<td>{{customer.markerIndex}}</td>
+								<td>{{customer.Name}}</td>
+								<td>{{customer.City}}, {{customer.Country}}</td>
+								<td ng-class="customer.journeyDistance | gMapsDirectionClass"><b>{{customer.journeyDistance | gMapsDistance}}</b></td>
+								<td ng-class="customer.journeyTime | gMapsDirectionClass"><b>{{customer.journeyTime | gMapsTime}}</b></td>
+							</tr>
+						</table>
+					</div>
+
+				 	<div ng-if="customers === -1" id="input" class="col-sm-7">
+						<p class="bg-danger">Error retrieving customer list from: {{customerUrl}}</p>
+					</div>
+
+					<div id="output" class="col-sm-5">
+						<div id="map">
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+
+	</body>
+
+	<script src="js/appMapping.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap"></script>
+
+
+	<link rel="stylesheet" href="css/appMapping.css" />
+</html>
