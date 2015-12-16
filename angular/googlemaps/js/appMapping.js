@@ -2,6 +2,8 @@ var app = angular.module('mapping', []);
 
 app.controller('mapCtrl', function($window, $scope, $http) {
 	var geocodeCount = 0;
+	$scope.customers = undefined
+	$scope.customerUrl = "http://www.w3schools.com/angular/customers.php";
 	$scope.gmaps = {
 			map: undefined,
 			geocoder: undefined,
@@ -149,7 +151,7 @@ app.controller('mapCtrl', function($window, $scope, $http) {
 
 
 			//fetch some data. . address hardcoded as only a demo
-			$http.get("http://www.w3schools.com/angular/customers.php").then(function (response) {
+			$http.get($scope.customerUrl).then(function success(response) {
 					
 					var customers = response.data.records;
 					for (i=0; i<customers.length; i++) {
@@ -164,26 +166,30 @@ app.controller('mapCtrl', function($window, $scope, $http) {
 					//add all customers to map
 					gmaps.addMultiMarkers(customers);
 
+				},
+				function error(response){
+					$scope.customers = -1;
 				});
 
 		};
 
 });
 
-app.filter('gMapsDistance', function() {
+app.filter('gMapsDistance', function($filter) {
   return function(input) {
 			var html;
+
 			if (input === "loading"){
 				html = "...";
 			}
 			else if (input === "ZERO_RESULTS") {
-				html = "X";
+				html = "Not available";
 			}
 			else if (input === "") {
 				html = "";
 			}
 			else {
-				html = "" + input / 1000 + " km";
+				html = "" + $filter('number')(input / 1000, 1) + " km";
 			}
 
 			return html;
@@ -193,12 +199,12 @@ app.filter('gMapsDistance', function() {
 app.filter('gMapsTime', function() {
   return function(input) {
 			var html;
-			
+
 			if (input === "loading"){
 				html = "...";
 			}
 			else if (input === "ZERO_RESULTS") {
-				html = "X";
+				html = "Not available";
 			}
 			else if (input === "") {
 				html = "";
@@ -210,3 +216,27 @@ app.filter('gMapsTime', function() {
 			return html;
 		};
 });
+
+app.filter('gMapsDirectionClass', function() {
+  return function(input) {
+			var html;
+
+			if (input === "loading"){
+				html = "text-warning";
+			}
+			else if (input === "ZERO_RESULTS") {
+				html = "text-danger";
+			}
+			else if (input === "") {
+				html = "";
+			}
+			else {
+				html = "text-success";
+			}
+
+			return html;
+		};
+});
+
+
+

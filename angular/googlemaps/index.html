@@ -7,25 +7,28 @@
 		<div ng-app="mapping" ng-controller="mapCtrl">
 
 
-			<div class="jumbotron">
+			<div class="jumbotron well-sm">
 				<h1>Customer Mapping</h1>
 				<p>A demonstration of a Google Maps integration using JavaScript, Angular, AJAX and a JSON data source.</p>
-				<form class="form-group">
-					<div class="row">
-						<span >Enter a start address for journey distance/time to be displayed</span>
-					</div>
-					<div class="row">
-						<input type="text"  class="col-sm-3" ng-model="gmaps.startAddressDraft" placeholder="e.g. London, UK"/>
-						<button  class="col-sm-1 btn-success" ng-click="gmaps.clickBtnStartAddress()" >Go</button>
-						<input type="hidden" ng-model="gmaps.startAddress" />
-					</div>
+				<form class="form-inline" role="form">
+				  <div class="form-group">
+				    <label for="startAddress">Start address:</label>
+				    <input type="text" id="startAddress" ng-model="gmaps.startAddressDraft" class="form-control" placeholder="e.g. London, UK"/>
+					
+					<input type="hidden" ng-model="gmaps.startAddress" />
+				  </div>
+				  <button type="submit" class="btn btn-success" ng-click="gmaps.clickBtnStartAddress()" >Go</button>
+				  
 				</form>
 			</div>
 
-		 	<div class="container">
+		 	<div class="container-fluid">
 		 		<div class="row">
+				 	<div ng-if="customers === undefined" id="input" class="col-sm-7">
+						<p>. . loading customers. . </p>
+					</div>
 
-				 	<div id="input" class="col-sm-7">
+				 	<div ng-if="customers !== undefined" id="input" class="col-sm-7">
 						<table class="table">
 							<tr>
 								<th></th>
@@ -39,10 +42,14 @@
 								<td>{{customer.markerIndex}}</td>
 								<td>{{customer.Name}}</td>
 								<td>{{customer.City}}, {{customer.Country}}</td>
-								<td>{{customer.journeyDistance | gMapsDistance}}</td>
-								<td>{{customer.journeyTime | gMapsTime}}</td>
+								<td ng-class="customer.journeyDistance | gMapsDirectionClass"><b>{{customer.journeyDistance | gMapsDistance}}</b></td>
+								<td ng-class="customer.journeyTime | gMapsDirectionClass"><b>{{customer.journeyTime | gMapsTime}}</b></td>
 							</tr>
 						</table>
+					</div>
+
+				 	<div ng-if="customers === -1" id="input" class="col-sm-7">
+						<p class="bg-danger">Error retrieving customer list from: {{customerUrl}}</p>
 					</div>
 
 					<div id="output" class="col-sm-5">
@@ -58,7 +65,7 @@
 	</body>
 
 	<script src="js/appMapping.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuid2pFOtiwQSEzazrQj9CZUiNxb7rvkY&callback=initMap"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap"></script>
 
 
 	<link rel="stylesheet" href="css/appMapping.css" />
