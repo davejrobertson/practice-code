@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="js/appVehicleMgmt.js"></script>
+
+	<body>
+
+		<!-- Angular app for vehicle management -->
+		<div ng-app="vehicleMgmt" ng-controller="vehicleCtrl">
+
+			<!-- Page header -->
+			<div class="jumbotron well-sm">
+				<h1>Vehicle Management</h1>
+				<p>A one-stop portal for managing a fleet of vehicles.</p>
+			</div>
+
+			<!-- Bootstrap modal for adding vehicles-->
+			<div id="myModal" class="modal fade" role="dialog">
+				<div class="modal-dialog">
+
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Add a car to the fleet</h4>
+						</div>
+
+						<div class="modal-body">
+							<form role="form">
+							  <div class="form-group">
+							  	<!--Vehicle type-->
+							    <label for="fieldType">Type:</label>
+								<select class="form-control" id="fieldType" ng-model="form.fieldType">
+									<option>Car</option>
+									<option>Van</option>
+									<option>Convertible</option>
+									<option>Motorbike</option>
+								</select>
+								
+							  	<!--Vehicle make-->
+							    <label for="fieldMake">Make:</label>
+							    <input type="text" id="fieldMake" ng-model="form.fieldMake" class="form-control" placeholder="e.g. Audi">
+								
+							  	<!--Vehicle model-->
+							    <label for="fieldModel">Model:</label>
+							    <input type="text" id="fieldModel" ng-model="form.fieldModel" class="form-control" placeholder="e.g. A3"/>
+								
+							  	<!--Vehicle registration-->
+							    <label for="fieldReg">Reg:</label>
+							    <input type="text" id="fieldReg" ng-model="form.fieldReg" class="form-control" placeholder="e.g. AA11 BBB"/>
+								
+							  	<!--Vehicle wheels-->
+							    <label for="fieldWheels">Wheels:</label>
+								<select class="form-control" id="fieldWheels" ng-model="form.fieldWheels">
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5+</option>
+								</select>
+
+							  	<!--Vehicle passengers-->
+							    <label for="fieldPassengers">Passengers:</label>
+								<select class="form-control" id="fieldPassengers" ng-model="form.fieldPassengers">
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+									<option>6+</option>
+								</select>
+								
+							  </div>
+							  <button type="submit" class="btn btn-success" ng-click="form.addVehicle()" >
+							  		<span class="glyphicon glyphicon-plus"></span> Add
+							  </button>
+							  
+							</form>
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+
+
+
+			<!-- Reults area -->
+		 	<div class="container-fluid">
+
+	 			<div class="row">
+
+	 				<!-- view switch -->
+	 				<div class="col-sm-4">
+					  <div class="form-group">
+						   
+							<label for="fieldRadioSelect1">
+						   		<input type="radio" id="fieldRadioSelect1" ng-model="fieldRadioSelect" value="Available"/>
+								Available
+							</label>&nbsp;
+							<label for="fieldRadioSelect2">
+						   		<input type="radio" id="fieldRadioSelect2" ng-model="fieldRadioSelect" value="Unavailable"/>
+						   		Booked
+							</label>&nbsp;
+							<label for="fieldRadioSelect3">
+						   		<input type="radio" id="fieldRadioSelect3" ng-model="fieldRadioSelect" value="All"/>
+								All
+							</label>
+						
+					  </div>
+					</div>
+
+					<!-- Vehicle assignment form-->
+	 				<div class="col-sm-6">
+						<form class="form-inline" role="form">
+						  <div class="form-group">
+
+						    <label for="fieldCustomerEmail">Customer Email:</label>
+						    <input type="text" id="fieldCustomerEmail" ng-model="form.fieldCustomerEmail" class="form-control" placeholder="e.g. abc@email.com"/>
+							
+
+							<button type="submit" class="btn btn-success" ng-click="form.assignVehicle()" >
+								<span class="glyphicon glyphicon-road"></span> Assign
+							</button>
+
+						  </div>
+						  
+						  
+						</form>
+	 				</div>
+
+	 				<!-- button for opening the add vehicle form -->
+	 				<div class="col-sm-1">
+					  <div class="form-group">
+						<!-- Trigger the modal with a button -->
+						<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+							<span class="glyphicon glyphicon-plus"></span> Add Vehicle(s)
+						</button>
+						
+					  </div>
+					</div>
+
+
+	 				<div class="col-sm-1">
+	 				</div>
+				</div>
+
+	 			<div class="row"><br/></div>
+
+		 		<div class="row">
+				 	<div ng-if="vehicles.length === 0" id="input" class="col-sm-12">
+						<p>Add vehicles to your fleet.</p>
+					</div>
+
+				 	<div ng-if="vehicles.length > 0" id="input" class="col-sm-12">
+				 		<div class="table-responsive">
+							<table class="table">
+								<tr>
+									<th></th>
+									<th>Assigned?</th>
+									<th>Type</th>
+									<th>Make</th>
+									<th>Model</th>
+									<th>Reg</th>
+									<th>Wheels</th>
+									<th>Passengers</th>
+									<th></th>
+								</tr>
+
+								<tr ng-repeat="vehicle in vehicles" ng-if="(fieldRadioSelect === 'All') || ((fieldRadioSelect === 'Available') && vehicle.available) || ((fieldRadioSelect === 'Unavailable') && !vehicle.available)">
+									<td>
+										<input type="checkbox" ng-model="form.selectedItems[$index]" ng-value="$index">
+									</td>
+									<td>
+										<span ng-if="vehicle.available">
+											available
+										</span>
+										<span ng-if="!vehicle.available" class="glyphicon glyphicon-user">
+											<a href="mailto:{{vehicle.assignedTo}}?subject=Your hire vehicle - {{vehicle.reg}}">{{vehicle.assignedTo}}</a>
+											<a href="#" ng-click="form.unassignVehicle($index)">
+												<span class="glyphicon glyphicon-remove"></span>
+											</a>
+										</span>
+									</td>
+									<td>{{vehicle.type}}</td>
+									<td>{{vehicle.make}}</td>
+									<td>{{vehicle.model}}</td>
+									<td>{{vehicle.reg}}</td>
+									<td>{{vehicle.wheels}}</td>
+									<td>{{vehicle.passengers}}</td>
+									<td>
+										<a href="#" ng-click="form.removeVehicle($index)" title="Remove vehicle from fleet">
+											<span class="glyphicon glyphicon-minus-sign"></span>
+										</a>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+
+
+
+		</div>
+
+	</body>
+
+
+</html>
